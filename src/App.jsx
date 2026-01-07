@@ -1,9 +1,9 @@
 function App() {
 
   return (
-    <>
-      <h1>그리디 미션 : 뉴스 웹 뷰어 시이작!</h1>
-    </>
+    <h1 className="text-3xl font-bold underline">
+      aa
+    </h1>
   )
 }
 
