@@ -42,8 +42,8 @@ export default function Header({ searchText, setSearchText }) {
         />
       </div>
 
-      <div className="sticky top-0 z-50 bg-white flex justify-between border-b border-t border-gray-300 px-25 py-2
-      dark:bg-gray-900"
+      <nav className="sticky top-0 z-50 bg-white flex justify-between
+        border-b border-t border-gray-300 px-35 py-2 overflow-x-auto dark:bg-gray-900"
       >
         {categoryList.map(({ category, text }) => {
           const isCurrentCategory = category === currentCategory;
@@ -52,7 +52,7 @@ export default function Header({ searchText, setSearchText }) {
             <Link
               key={category}
               to={path}
-              className={`text-xl font-bold text-center px-10 hover:underline ${
+              className={`text-xl font-bold text-center hover:underline ${
                 isCurrentCategory ? 'text-blue-300' : 'text-black  dark:text-white'
               }`}
             >
@@ -60,7 +60,7 @@ export default function Header({ searchText, setSearchText }) {
             </Link>
           );
         })}
-      </div>
+      </nav>
     </>
   );
 }

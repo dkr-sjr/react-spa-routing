@@ -22,7 +22,7 @@ export default function NewsItem({ article }) {
               {source.name}
             </span>
             <span>•</span>
-            <time className="">
+            <time dateTime={publishedAt}>
               {publishedAt.split('T')[0]}
             </time>
           </div>
