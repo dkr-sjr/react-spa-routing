@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
-import { getNewsListByCategory } from '../api/newsApi';
+import getNewsListByCategory from '../api/newsApi';
 
-export const useNewsListQuery = (category) => {
+const useNewsListQuery = (category) => {
   const categoryKey = category === '' ? 'all' : category;
   return useQuery({
     queryKey: ['news', categoryKey],
@@ -11,4 +11,6 @@ export const useNewsListQuery = (category) => {
     gcTime: 1000 * 60 * 20,
     refetchOnWindowFocus: false,
   });
-}
+};
+
+export default useNewsListQuery;
