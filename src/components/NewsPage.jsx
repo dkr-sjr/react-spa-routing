@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom';
 import useNewsListQuery from '../hooks/useNewsListQuery';
 import NewsItem from './NewsItem';
 
-export default function NewsPage() {
+export default function NewsPage({ searchText }) {
   const { category } = useParams();
   const currentCategory = category || 'all';
 
@@ -19,13 +19,23 @@ export default function NewsPage() {
       return false;
     }
 
+    if (searchText) {
+      const titleLower = article.title?.toLowerCase();
+      const searchLower = searchText.toLowerCase();
+
+      if (!titleLower.includes(searchLower)) {
+        return false;
+      }
+    }
+
     return true;
   });
 
   if (isLoading) {
     return (
-      <>
-      </>
+      <div className="">
+        Loading Article!
+      </div>
     );
   }
 
@@ -36,8 +46,16 @@ export default function NewsPage() {
     );
   }
 
+  if (!articleList.length) {
+    return (
+      <div>
+        No Results Found
+      </div>
+    );
+  }
+
   return (
-    <div className="flex flex-col gap-1 mt-5">
+    <div className="flex flex-col gap-1 mt-5 mx-[7%]">
       {articleList.map((article) => (<NewsItem key={article.url} article={article} />))}
     </div>
   );

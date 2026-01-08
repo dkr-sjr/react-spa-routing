@@ -11,10 +11,10 @@ export default function NewsItem({ article }) {
   const hasImageUrl = urlToImage !== null;
 
   return (
-    <a href={url} target="_blank" rel="noopener noreferrer" className="mx-30 p-5 my-2">
-      <div className="flex gap-10">
-        <div className="flex flex-7 flex-col">
-          <h3 className="text-2xl font-bold hover:text-blue-300">
+    <a href={url} target="_blank" rel="noopener noreferrer" className="mt-8.5">
+      <div className="w-full flex justify-between gap-10">
+        <div className="w-7/11 flex flex-col">
+          <h3 className="text-2xl font-bold hover:underline">
             {title}
           </h3>
           <div className="flex text-xs text-gray-400 gap-2 my-1.5">
@@ -31,8 +31,8 @@ export default function NewsItem({ article }) {
           </p>
         </div>
 
-        <div className="flex-4">
-          {hasImageUrl && <img src={urlToImage} alt={title} />}
+        <div className="w-4/11">
+          {hasImageUrl && <img src={urlToImage} alt={title} className="w-full" />}
         </div>
       </div>
 
