@@ -1,9 +1,18 @@
+import Header from "./components/Header"
+import NewsPage from "./components/NewsPage"
+
+import { Routes, Route } from "react-router-dom";
 function App() {
 
   return (
-    <h1 className="text-3xl font-bold underline">
-      aa
-    </h1>
+    <>
+      <Header></Header>
+      <main>
+        <Routes>
+          <Route path="/:category?" element={<NewsPage />} />
+        </Routes>
+      </main>
+    </>
   )
 }
 
