@@ -43,7 +43,8 @@ export default function Header({ searchText, setSearchText }) {
       </div>
 
       <nav className="sticky top-0 z-50 bg-white flex justify-between
-        border-b border-t border-gray-300 px-35 py-2 overflow-x-auto dark:bg-gray-900"
+        border-b border-t border-gray-300 px-25 py-2 overflow-x-auto dark:bg-gray-900
+        xl:px-35"
       >
         {categoryList.map(({ category, text }) => {
           const isCurrentCategory = category === currentCategory;
