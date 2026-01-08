@@ -16,9 +16,9 @@ export default function Header() {
 
   return (
     <>
-      <div className="flex bg-white my-5 mx-25 gap-2">
+      <div className="flex bg-white my-5 mx-30 gap-2">
         <Link to="/">
-          <h1 className="flex text-5xl text-center font-bold bg-blue-300 p-2 shadow-sm m-5">
+          <h1 className="flex text-4xl text-center font-bold bg-blue-300 p-1 shadow-sm m-4">
             <span className="text-blue-300 bg-white px-3">
               WORLD
             </span>
@@ -29,7 +29,7 @@ export default function Header() {
         </Link>
       </div>
 
-      <div className="flex justify-center border-b border-t border-gray-300 px-10 py-2">
+      <div className="sticky top-0 z-50 bg-white flex justify-between border-b border-t border-gray-300 px-25 py-2">
         {categoryList.map(({ category, text }) => {
           const isCurrentCategory = category === currentCategory;
           const path = category === 'all' ? '/' : `/${category}`;
@@ -37,7 +37,7 @@ export default function Header() {
             <Link
               key={category}
               to={path}
-              className={`text-2xl font-bold text-center px-10 hover:underline ${
+              className={`text-xl font-bold text-center px-10 hover:underline ${
                 isCurrentCategory ? 'text-blue-300' : 'text-black'
               }`}
             >

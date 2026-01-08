@@ -8,7 +8,19 @@ export default function NewsPage() {
 
   const { data: articles, isLoading, error } = useNewsListQuery(currentCategory);
 
-  const articleList = articles || [];
+  const articleList = (articles || []).filter((article) => {
+    if (!article.url) {
+      return false;
+    }
+    if (article.title === '[removed]') {
+      return false;
+    }
+    if (!article.description || article.description === '') {
+      return false;
+    }
+
+    return true;
+  });
 
   if (isLoading) {
     return (
@@ -25,7 +37,7 @@ export default function NewsPage() {
   }
 
   return (
-    <div className="flex">
+    <div className="flex flex-col gap-1 mt-5">
       {articleList.map((article) => (<NewsItem key={article.url} article={article} />))}
     </div>
   );
