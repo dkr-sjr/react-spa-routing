@@ -1,21 +1,11 @@
 import { Routes, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import useThemeStore from './store/useThemeStore';
+import { useState } from 'react';
 import Header from './components/Header';
 import NewsPage from './components/NewsPage';
 import NotFound from './components/NotFound';
 
 function App() {
   const [searchText, setSearchText] = useState('');
-  const { isDarkMode } = useThemeStore();
-
-  useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [isDarkMode]);
 
   return (
     <div className="min-h-screen dark:bg-gray-900 dark:text-white">
