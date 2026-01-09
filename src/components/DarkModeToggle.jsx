@@ -1,10 +1,9 @@
-import useThemeStore from '../store/useThemeStore';
+import { useTheme } from '../contexts/ThemeContext';
 import sunIcon from '../assets/images/sun.svg';
 import moonIcon from '../assets/images/moon.svg';
 
 export default function DarkModeToggle() {
-  const { isDarkMode, toggleTheme } = useThemeStore();
-
+  const { isDarkMode, toggleTheme } = useTheme();
   return (
     <button
       type="button"

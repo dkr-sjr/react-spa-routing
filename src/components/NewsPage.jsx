@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import useNewsListQuery from '../hooks/useNewsListQuery';
+import useNewsListFetch from '../hooks/useNewsListFetch';
 import NewsItem from './NewsItem';
 import NotFound from './NotFound';
 
@@ -14,8 +14,7 @@ export default function NewsPage({ searchText }) {
     isLoading,
     error,
     refetch,
-    isFetching,
-  } = useNewsListQuery(currentCategory);
+  } = useNewsListFetch(currentCategory);
 
   if (currentCategory && !categories.includes(currentCategory)) {
     return <NotFound />;
@@ -69,9 +68,8 @@ export default function NewsPage({ searchText }) {
           type="button"
           onClick={() => refetch()}
           className="mt-4 border border-gray-300 rounded-xl px-4 py-2"
-          disabled={isFetching}
         >
-          {isFetching ? 'Loading...' : 'Try Load Again'}
+          Try Load Again
         </button>
       </div>
     );
