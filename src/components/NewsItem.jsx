@@ -16,7 +16,7 @@ export default function NewsItem({ article }) {
     <a href={url} target="_blank" rel="noopener noreferrer" className="mt-8.5">
       <div className="w-full flex justify-between gap-10">
         <div className="w-7/11 flex flex-col">
-          <h3 className="text-2xl font-bold hover:underline">
+          <h3 className="text-xl md:text-2xl font-bold hover:underline">
             {title}
           </h3>
           <div className="flex text-xs text-gray-400 gap-2 my-1.5">

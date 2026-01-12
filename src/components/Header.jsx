@@ -44,7 +44,7 @@ export default function Header() {
       <div className="flex mx-[7%] pt-5 justify-end">
         <DarkModeToggle />
       </div>
-      <div className="flex justify-between mb-5 mt-3 mx-[7%] gap-10">
+      <div className="flex flex-col md:flex-row justify-between mb-5 mt-3 mx-[7%] gap-5 md:gap-10">
         <div className="w-7/11 flex ">
           <Link to="/">
             <h1 className="text-4xl text-center font-bold bg-blue-300 shadow-sm ">
@@ -59,10 +59,10 @@ export default function Header() {
         </div>
         <form
           onSubmit={handleSearch}
-          className="border border-gray-300 rounded-4xl px-4 w-4/11 flex items-center gap-2"
+          className="border border-gray-300 rounded-4xl px-4 md:w-4/11 flex items-center gap-2"
         >
           <button type="submit" aria-label="Submit Search Text">
-            <SearchIcon className="w-6 h-6" />
+            <SearchIcon className="w-6 h-6 dark:text-white fill-current" />
           </button>
           <input
             className="my-2 w-full outline-none"
@@ -76,14 +76,14 @@ export default function Header() {
       </div>
 
       <nav className="sticky top-0 z-50 bg-white border-b border-t border-gray-300 dark:bg-gray-900">
-        <ul className="flex justify-between px-25 py-2 overflow-x-auto xl:px-35">
+        <ul className="flex justify-between px-5 py-2 overflow-x-auto sg:px-15 xl:px-35">
           {categoryList.map(({ id, label }) => {
             const path = id === 'all' ? '/' : `/${id}`;
             return (
               <li key={id}>
                 <NavLink
                   to={path}
-                  className={({ isActive }) => `text-xl font-bold text-center hover:underline ${
+                  className={({ isActive }) => `text-sg md:text-xl font-bold text-center hover:underline ${
                     isActive ? 'text-blue-300' : 'text-black dark:text-white'
                   }`}
                 >
