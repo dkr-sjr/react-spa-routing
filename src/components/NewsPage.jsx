@@ -1,13 +1,20 @@
-import { useParams } from 'react-router-dom';
+import { useParams, useSearchParams } from 'react-router-dom';
 import useNewsListFetch from '../hooks/useNewsListFetch';
+import useFilteredNewsList from '../hooks/useFilteredNewsList';
 import NewsItem from './NewsItem';
-import NotFound from './NotFound';
+import LoadingLayout from './Layouts/LoadingLayout';
+import ErrorLayout from './Layouts/ErrorLayout';
+import NotFoundLayout from './Layouts/NotFoundLayout';
+import NoArticleLayout from './Layouts/NoArticleLayout';
 
 const categories = ['all', 'business', 'entertainment', 'health', 'science', 'sports', 'technology'];
 
-export default function NewsPage({ searchText }) {
+export default function NewsPage() {
   const { category } = useParams();
+  const [searchParams] = useSearchParams();
+
   const currentCategory = category || 'all';
+  const searchText = searchParams.get('q') || '';
 
   const {
     data: articles,
@@ -16,71 +23,19 @@ export default function NewsPage({ searchText }) {
     refetch,
   } = useNewsListFetch(currentCategory);
 
+  const articleList = useFilteredNewsList(articles, searchText);
+
   if (currentCategory && !categories.includes(currentCategory)) {
-    return <NotFound />;
+    return <NotFoundLayout />;
   }
-
-  const articleList = (articles || []).filter((article) => {
-    if (!article.url) {
-      return false;
-    }
-    if (article.title === '[removed]') {
-      return false;
-    }
-    if (!article.description || article.description === '') {
-      return false;
-    }
-
-    if (searchText) {
-      const titleLower = article.title?.toLowerCase();
-      const descriptionLower = (article.description || '').toLowerCase();
-      const searchLower = searchText.toLowerCase();
-
-      if (!titleLower.includes(searchLower) && !descriptionLower.includes(searchLower)) {
-        return false;
-      }
-    }
-
-    return true;
-  });
-
   if (isLoading) {
-    return (
-      <div className="text-center mt-20 text-xl">
-        <h2>
-          Loading Articles..!
-        </h2>
-      </div>
-    );
+    return <LoadingLayout />;
   }
-
   if (error) {
-    return (
-      <div className="text-center mt-20 text-xl">
-        <h2>
-          Failed Load Articles..!
-        </h2>
-        <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
-          {`error message :${error.message}`}
-        </p>
-
-        <button
-          type="button"
-          onClick={() => refetch()}
-          className="mt-4 border border-gray-300 rounded-xl px-4 py-2"
-        >
-          Try Load Again
-        </button>
-      </div>
-    );
+    return <ErrorLayout error={error} onRetry={refetch} />;
   }
-
   if (!articleList.length) {
-    return (
-      <div className="text-center mt-20 text-xl">
-        No news found. 🕵️‍♂️
-      </div>
-    );
+    return <NoArticleLayout />;
   }
 
   return (

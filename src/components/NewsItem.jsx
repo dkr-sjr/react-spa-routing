@@ -1,3 +1,5 @@
+import { useState } from 'react';
+
 export default function NewsItem({ article }) {
   const {
     title,
@@ -8,7 +10,7 @@ export default function NewsItem({ article }) {
     source,
   } = article;
 
-  const hasImageUrl = urlToImage !== null;
+  const [isImageValid, setIsImageValid] = useState(!!urlToImage);
 
   return (
     <a href={url} target="_blank" rel="noopener noreferrer" className="mt-8.5">
@@ -32,7 +34,20 @@ export default function NewsItem({ article }) {
         </div>
 
         <div className="w-4/11">
-          {hasImageUrl && <img src={urlToImage} alt={title} className="w-full" />}
+          {isImageValid && (
+            <img
+              src={urlToImage}
+              alt={title}
+              className="w-full"
+              onError={() => setIsImageValid(false)}
+            />
+          )}
+
+          {!isImageValid && (
+            <div className="flex h-full w-full items-center justify-center bg-gray-100 text-lg text-gray-400">
+              No Image Available
+            </div>
+          )}
         </div>
       </div>
 

@@ -9,10 +9,17 @@ import {
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem('theme');
-    return savedTheme === 'dark';
-  });
+  const savedTheme = localStorage.getItem('theme');
+
+  const initialIsDarkMode = (() => {
+    if (savedTheme) {
+      return savedTheme === 'dark';
+    }
+
+    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+  })();
+
+  const [isDarkMode, setIsDarkMode] = useState(initialIsDarkMode);
 
   useEffect(() => {
     if (isDarkMode) {

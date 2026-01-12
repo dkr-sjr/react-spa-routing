@@ -1,22 +1,16 @@
 import { Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
-import Header from './components/Header';
+import MainLayout from './components/Layouts/MainLayout';
 import NewsPage from './components/NewsPage';
-import NotFound from './components/NotFound';
+import NotFoundLayout from './components/Layouts/NotFoundLayout';
 
 function App() {
-  const [searchText, setSearchText] = useState('');
-
   return (
-    <div className="min-h-screen dark:bg-gray-900 dark:text-white">
-      <Header searchText={searchText} setSearchText={setSearchText} />
-      <main>
-        <Routes>
-          <Route path="/:category?" element={<NewsPage searchText={searchText} />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </main>
-    </div>
+    <Routes>
+      <Route element={<MainLayout />}>
+        <Route path="/:category?" element={<NewsPage />} />
+        <Route path="*" element={<NotFoundLayout />} />
+      </Route>
+    </Routes>
   );
 }
 

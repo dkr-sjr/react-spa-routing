@@ -1,19 +1,39 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import {
+  NavLink,
+  Link,
+  useNavigate,
+  useParams,
+} from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle';
+import searchIcon from '../assets/images/search.svg';
 
 const categoryList = [
-  { category: 'all', text: 'All' },
-  { category: 'business', text: 'Business' },
-  { category: 'entertainment', text: 'Entertainment' },
-  { category: 'health', text: 'Health' },
-  { category: 'science', text: 'Science' },
-  { category: 'sports', text: 'Sports' },
-  { category: 'technology', text: 'Technology' },
+  { id: 'all', label: 'All' },
+  { id: 'business', label: 'Business' },
+  { id: 'entertainment', label: 'Entertainment' },
+  { id: 'health', label: 'Health' },
+  { id: 'science', label: 'Science' },
+  { id: 'sports', label: 'Sports' },
+  { id: 'technology', label: 'Technology' },
 ];
 
-export default function Header({ searchText, setSearchText }) {
-  const location = useLocation();
-  const currentCategory = location.pathname === '/' ? 'all' : location.pathname.substring(1);
+export default function Header() {
+  const navigate = useNavigate();
+  const { category } = useParams();
+  const currentCategory = category || 'all';
+
+  const [inputValue, setInputValue] = useState('');
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    navigate(`?q=${inputValue}`);
+  };
+
+  useEffect(() => {
+    setInputValue('');
+  }, [currentCategory]);
 
   return (
     <>
@@ -21,46 +41,58 @@ export default function Header({ searchText, setSearchText }) {
         <DarkModeToggle />
       </div>
       <div className="flex justify-between mb-5 mt-3 mx-[7%] gap-10">
-        <div className="w-7/11 flex">
+        <div className="w-7/11 flex ">
           <Link to="/">
-            <h1 className="flex text-4xl text-center font-bold bg-blue-300 p-1 shadow-sm my-3">
-              <span className="text-blue-300 bg-white px-3  dark:bg-gray-900">
+            <h1 className="text-4xl text-center font-bold bg-blue-300 shadow-sm ">
+              <span className="inline-block text-blue-300 bg-white px-3 m-1 dark:bg-gray-900">
                 NEWS
               </span>
-              <span className="text-white bg-blue-300 px-3  dark:text-gray-900">
+              <span className="inline-block text-white bg-blue-300 px-3 m-1 dark:text-gray-900">
                 WORLD
               </span>
             </h1>
           </Link>
         </div>
-        <input
-          type="text"
-          placeholder="Search..."
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          className="border border-gray-300 rounded-4xl my-3 px-5 w-4/11 flex"
-        />
+        <form
+          onSubmit={handleSearch}
+          className="border border-gray-300 rounded-4xl px-4 w-4/11 flex items-center gap-2"
+        >
+          <button type="submit">
+            <img
+              src={searchIcon}
+              alt="Search"
+              className="w-6 h-6"
+            />
+          </button>
+          <input
+            className="my-2 w-full outline-none"
+            type="text"
+            name="name"
+            placeholder="Search Article."
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+          />
+        </form>
       </div>
 
-      <nav className="sticky top-0 z-50 bg-white flex justify-between
-        border-b border-t border-gray-300 px-25 py-2 overflow-x-auto dark:bg-gray-900
-        xl:px-35"
-      >
-        {categoryList.map(({ category, text }) => {
-          const isCurrentCategory = category === currentCategory;
-          const path = category === 'all' ? '/' : `/${category}`;
-          return (
-            <Link
-              key={category}
-              to={path}
-              className={`text-xl font-bold text-center hover:underline ${
-                isCurrentCategory ? 'text-blue-300' : 'text-black  dark:text-white'
-              }`}
-            >
-              {text}
-            </Link>
-          );
-        })}
+      <nav className="sticky top-0 z-50 bg-white border-b border-t border-gray-300 dark:bg-gray-900">
+        <ul className="flex justify-between px-25 py-2 overflow-x-auto xl:px-35">
+          {categoryList.map(({ id, label }) => {
+            const path = id === 'all' ? '/' : `/${id}`;
+            return (
+              <li key={id}>
+                <NavLink
+                  to={path}
+                  className={({ isActive }) => `text-xl font-bold text-center hover:underline ${
+                    isActive ? 'text-blue-300' : 'text-black dark:text-white'
+                  }`}
+                >
+                  {label}
+                </NavLink>
+              </li>
+            );
+          })}
+        </ul>
       </nav>
     </>
   );
