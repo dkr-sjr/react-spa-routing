@@ -47,6 +47,7 @@ export default [
       'linebreak-style': 'off',
       'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
       'no-underscore-dangle': ['error', { allow: ['__filename', '__dirname'] }],
+      'import/no-unresolved': ['error', { ignore: ['\\.svg\\?react$'] }],
     },
   },
 ];

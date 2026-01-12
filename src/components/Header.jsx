@@ -6,7 +6,7 @@ import {
   useParams,
 } from 'react-router-dom';
 import DarkModeToggle from './DarkModeToggle';
-import searchIcon from '../assets/images/search.svg';
+import SearchIcon from '../assets/images/search.svg?react';
 
 const categoryList = [
   { id: 'all', label: 'All' },
@@ -27,8 +27,12 @@ export default function Header() {
 
   const handleSearch = (e) => {
     e.preventDefault();
-
-    navigate(`?q=${inputValue}`);
+    if (inputValue !== '') {
+      navigate(`?q=${inputValue}`);
+    } else {
+      const basePath = category ? `/${category}` : '/';
+      navigate(basePath);
+    }
   };
 
   useEffect(() => {
@@ -57,12 +61,8 @@ export default function Header() {
           onSubmit={handleSearch}
           className="border border-gray-300 rounded-4xl px-4 w-4/11 flex items-center gap-2"
         >
-          <button type="submit">
-            <img
-              src={searchIcon}
-              alt="Search"
-              className="w-6 h-6"
-            />
+          <button type="submit" aria-label="Submit Search Text">
+            <SearchIcon className="w-6 h-6" />
           </button>
           <input
             className="my-2 w-full outline-none"

@@ -1,6 +1,6 @@
 import { useTheme } from '../contexts/ThemeContext';
-import sunIcon from '../assets/images/sun.svg';
-import moonIcon from '../assets/images/moon.svg';
+import MoonIcon from '../assets/images/moon.svg?react';
+import SunIcon from '../assets/images/sun.svg?react';
 
 export default function DarkModeToggle() {
   const { isDarkMode, toggleTheme } = useTheme();
@@ -11,11 +11,11 @@ export default function DarkModeToggle() {
       aria-label={isDarkMode ? 'Switch to light mode' : 'Switch to dark mode'}
       className="border border-gray-300 rounded-xl p-2 hover:bg-gray-100 dark:hover:bg-gray-800"
     >
-      <img
-        src={isDarkMode ? moonIcon : sunIcon}
-        alt="Toggle Theme"
-        className="w-5 h-5 "
-      />
+      {isDarkMode ? (
+        <MoonIcon className="w-6 h-6 text-gray-700 fill-current" />
+      ) : (
+        <SunIcon className="w-6 h-6 text-yellow-500 fill-current" />
+      )}
     </button>
   );
 }
